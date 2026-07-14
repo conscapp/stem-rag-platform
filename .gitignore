@@ -32,6 +32,6 @@ data/raw_pdfs/**/.ingest_checkpoint.json
 # Logs
 *.log
 
-# Model cache
+# Model cache (do not ignore backend/app/models)
 .cache/
-models/
+**/huggingface/
