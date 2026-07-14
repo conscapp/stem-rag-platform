@@ -5,7 +5,7 @@ Target: **Vercel** (frontend) + **Railway** (backend Docker) + existing **Qdrant
 ## Prerequisites
 
 - GitHub repo with this project
-- Railway account with a service that has **≥4 GB RAM**
+- Railway Hobby account (512MB–1GB RAM is enough with hosted embeddings)
 - Vercel account
 - DNS control for `conscrag.com` (optional for first preview)
 
@@ -30,7 +30,7 @@ Confirm `public_posts` has `terms_accepted_at`, `terms_version`, `publish_consen
 1. **New project** → Deploy from GitHub → select this repo.
 2. **Root directory:** leave empty (repository root).
 3. Build uses [`backend/Dockerfile`](backend/Dockerfile) via [`railway.toml`](railway.toml).
-4. Set **memory ≥ 4 GB**.
+4. Set memory ~1 GB (raise only if needed).
 5. Environment variables (from `deploy/production.env.template`):
 
 ```env
@@ -113,8 +113,8 @@ Or use the checklist in [LAUNCH.md](LAUNCH.md).
 
 | Symptom | Fix |
 |---------|-----|
-| OOM / crash loop | Raise Railway memory to 4–8 GB |
+| OOM / crash loop | Raise RAM slightly; confirm EMBEDDING_PROVIDER=openai/voyage (not local) |
 | CORS errors in browser | Add exact frontend origin to `CORS_ORIGINS`; set `CORS_ORIGIN_REGEX` for Vercel previews |
-| Empty / weak answers | Confirm Railway uses same `QDRANT_*` as local ingest; check BM25 rebuild logs on boot |
+| Empty / weak answers | Re-run `ingest_premium.py --fresh` with same embedding provider as Railway |
 | Health supabase error | Service role key + migrations applied |
-| Slow first request | Image should pre-download BGE-M3; check build logs |
+| Slow first request | Normal for LLM; embeddings are API calls now |

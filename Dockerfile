@@ -1,6 +1,5 @@
 # Slim API image — hosted embeddings (OpenAI/Voyage). No PyTorch.
-# Build from repository root: docker build -f Dockerfile .
-# Railway Root Directory: EMPTY
+# Build from repository root. Railway Root Directory: EMPTY
 
 FROM python:3.11-slim
 

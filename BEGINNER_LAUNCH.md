@@ -53,20 +53,22 @@ git push -u origin main
 - `DEEPSEEK_API_KEY`
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_KEY`
-- `EMBEDDING_MODEL` → `BAAI/bge-m3`
-- `EMBEDDING_QUERY_PREFIX` → `true`
+- `EMBEDDING_PROVIDER` → `openai`
+- `OPENAI_API_KEY` → your OpenAI key
+- `EMBEDDING_MODEL` → `text-embedding-3-large`
+- `EMBEDDING_DIMENSIONS` → `1024`
 - `HYBRID_SEARCH_ENABLED` → `true`
 - `CORS_ORIGINS` → `https://conscrag.com,https://www.conscrag.com`
 - `CORS_ORIGIN_REGEX` → `https://.*\.vercel\.app`
 - `ADMIN_API_KEY` → invent a long password and save it in a note app
 
-8. **Settings** → look for memory / resources → set **4 GB** or higher if you see that option.
+8. **Settings** → memory around **1 GB** is enough (hosted embeddings).
 9. **Settings** → **Networking** → **Generate domain**.
 10. Copy the URL (looks like `https://xxxxx.up.railway.app`).
 11. In the browser open: `https://xxxxx.up.railway.app/api/health`  
     You want: `"qdrant":"ok"` and `"supabase":"ok"`.
 
-**First deploy can take 15–20 minutes.** Wait for “Success”.
+**First deploy is usually a few minutes** with the slim Docker image. Wait for “Success”.
 
 ---
 

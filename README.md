@@ -13,7 +13,7 @@ Interpreter → Navigator → Connector → Synthesizer
 | Agent | Role |
 |-------|------|
 | **Interpreter** | Plain language → technical query + search terms |
-| **Navigator** | Hybrid RAG (BGE-M3 + BM25) with ontology routing |
+| **Navigator** | Hybrid RAG (hosted embeddings + BM25) with ontology routing |
 | **Connector** | Cross-STEM links and gaps (no Pass/Fail) |
 | **Synthesizer** | Exploration paths + what evidence is missing |
 

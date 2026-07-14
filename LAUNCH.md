@@ -7,7 +7,7 @@
 **3 innovation domains:** Aerospace · Nanotechnology · Nuclear Fusion (`clean_energy`)  
 **4 STEM subjects:** Physics · Chemistry · Math · Engineering  
 **4 polymath agents:** Interpreter → Navigator → Connector → Synthesizer  
-**Retrieval:** Hybrid search (BGE-M3 dense + BM25) over premium + STEM knowledge
+**Retrieval:** Hybrid search (OpenAI/Voyage dense + BM25) over premium + STEM knowledge
 
 ## Multi-Agent Architecture
 
@@ -100,7 +100,7 @@ Also: `GET http://127.0.0.1:8000/api/health` → `qdrant` and `supabase` ok.
 | Component | Platform | Notes |
 |-----------|----------|-------|
 | Frontend | Vercel | Root: `frontend`, set `NEXT_PUBLIC_API_URL` |
-| Backend | Railway | Repo root + `backend/Dockerfile`, **≥4 GB RAM** |
+| Backend | Railway | Repo root + `Dockerfile`, small RAM (hosted embeddings) |
 | Vectors | Qdrant Cloud | Same collection as local ingest |
 | DB | Supabase | Free tier OK for beta |
 

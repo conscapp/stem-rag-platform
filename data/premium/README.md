@@ -25,7 +25,7 @@ python scripts/fetch_ntrs.py --all-domains --max 15
 python scripts/fetch_arxiv.py --all-domains --max 15
 ```
 
-## Ingest (semantic chunking + BGE-M3 + BM25 hybrid index)
+## Ingest (semantic chunking + hosted embeddings + BM25 hybrid index)
 
 ```bash
 python scripts/ingest_premium.py --fresh
@@ -45,5 +45,5 @@ python scripts/ingest_premium.py --fresh
 
 ## Hybrid search
 
-Dense vectors (BGE-M3) + BM25 sparse index with reciprocal rank fusion.
+Dense vectors (OpenAI or Voyage) + BM25 sparse index with reciprocal rank fusion.
 Configured via `HYBRID_SEARCH_ENABLED=true` in `backend/.env`.
