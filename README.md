@@ -106,9 +106,9 @@ API docs at [http://localhost:8000/docs](http://localhost:8000/docs).
 ## Deployment
 
 **Frontend:** Vercel — root `frontend`, set `NEXT_PUBLIC_API_URL`.  
-**Backend:** Railway — Docker from repo root (`backend/Dockerfile`), **≥4 GB RAM**, bake BGE-M3.
+**Backend:** Railway — Docker from repo root (`Dockerfile`), **small RAM OK** with hosted OpenAI/Voyage embeddings.
 
-Full steps: [DEPLOY.md](DEPLOY.md). Go-live checkbox list: [GO_LIVE.md](GO_LIVE.md).
+Full steps: [DEPLOY.md](DEPLOY.md). Go-live checkbox list: [GO_LIVE.md](GO_LIVE.md). Embeddings: [docs/EMBEDDINGS.md](docs/EMBEDDINGS.md).
 
 ### Local Qdrant (alternative to cloud)
 
@@ -124,7 +124,8 @@ docker compose up -d
 | Qdrant Cloud free tier | $0 |
 | Supabase free tier | $0 |
 | Vercel free tier | $0 |
-| Railway (4GB+ for embeddings) | paid |
+| Railway (small API; hosted embeddings) | low |
+| OpenAI or Voyage embeddings | pay-per-use |
 | DeepSeek API (multi-agent queries) | ~$10–25 |
 
 ## Project Structure

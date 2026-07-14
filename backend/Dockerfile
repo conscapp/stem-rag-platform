@@ -1,31 +1,25 @@
-# Build from repository root:
-#   docker build -f backend/Dockerfile .
-# Prefer root Dockerfile on Railway (see /Dockerfile).
+# Prefer repository-root Dockerfile on Railway.
+# This copy stays for local `docker build -f backend/Dockerfile` from repo root.
 
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
-    HF_HOME=/app/.cache/huggingface \
-    TRANSFORMERS_CACHE=/app/.cache/huggingface \
-    SENTENCE_TRANSFORMERS_HOME=/app/.cache/sentence-transformers \
-    EMBEDDING_MODEL=BAAI/bge-large-en-v1.5 \
-    EMBEDDING_QUERY_PREFIX=true \
-    WARM_EMBEDDING_ON_STARTUP=false \
+    EMBEDDING_PROVIDER=openai \
+    EMBEDDING_MODEL=text-embedding-3-large \
+    EMBEDDING_DIMENSIONS=1024 \
     HYBRID_SEARCH_ENABLED=true \
     BM25_INDEX_PATH=data/index/bm25_corpus.json
 
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential curl \
+    && apt-get install -y --no-install-recommends curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY backend/requirements.txt /app/backend/requirements.txt
-RUN pip install --upgrade pip \
-    && pip install torch --index-url https://download.pytorch.org/whl/cpu \
-    && pip install -r /app/backend/requirements.txt
+RUN pip install --upgrade pip && pip install -r /app/backend/requirements.txt
 
 COPY backend/app /app/backend/app
 COPY backend/Procfile /app/backend/Procfile
@@ -36,8 +30,5 @@ WORKDIR /app/backend
 ENV PYTHONPATH=/app/backend
 
 EXPOSE 8000
-
-HEALTHCHECK --interval=30s --timeout=10s --start-period=300s --retries=5 \
-  CMD curl -fsS "http://127.0.0.1:${PORT:-8000}/api/health" || exit 1
 
 CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

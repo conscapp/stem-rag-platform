@@ -31,7 +31,7 @@ Confirm `public_posts` has `terms_accepted_at`, `terms_version`, `publish_consen
 2. **Root directory:** leave empty (repository root).
 3. Build uses [`backend/Dockerfile`](backend/Dockerfile) via [`railway.toml`](railway.toml).
 4. Set **memory ≥ 4 GB**.
-5. Environment variables (from `backend/.env.example`):
+5. Environment variables (from `deploy/production.env.template`):
 
 ```env
 QDRANT_URL=
@@ -40,13 +40,17 @@ COLLECTION_NAME=stem_vectors
 DEEPSEEK_API_KEY=
 SUPABASE_URL=
 SUPABASE_SERVICE_KEY=
-ADMIN_API_KEY=  # generate a long random string
-EMBEDDING_MODEL=BAAI/bge-m3
-EMBEDDING_QUERY_PREFIX=true
+ADMIN_API_KEY=
+EMBEDDING_PROVIDER=openai
+OPENAI_API_KEY=
+EMBEDDING_MODEL=text-embedding-3-large
+EMBEDDING_DIMENSIONS=1024
 HYBRID_SEARCH_ENABLED=true
 CORS_ORIGINS=https://conscrag.com,https://www.conscrag.com
 CORS_ORIGIN_REGEX=https://.*\.vercel\.app
 ```
+
+See [docs/EMBEDDINGS.md](docs/EMBEDDINGS.md). **512MB–1GB RAM** is enough with hosted embeddings.
 
 After Vercel gives a stable URL, add it to `CORS_ORIGINS` exactly (e.g. `https://stem-rag-platform.vercel.app`).
 

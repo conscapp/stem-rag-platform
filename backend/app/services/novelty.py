@@ -10,7 +10,6 @@ from qdrant_client.models import Distance, PointStruct, VectorParams
 from app.constants import VALID_DOMAINS, normalize_domain
 from app.config import get_settings
 from app.services.ontology import get_ontology
-from app.services.embeddings import get_encoder
 from app.services.retriever import embed_text, get_qdrant_client
 
 
@@ -51,8 +50,9 @@ def _ensure_innovation_collection(client: QdrantClient) -> None:
     name = settings.innovation_collection_name
     collections = [c.name for c in client.get_collections().collections]
     if name not in collections:
-        encoder = get_encoder()
-        size = encoder.get_sentence_embedding_dimension()
+        from app.services.embeddings import get_embedding_dimension
+
+        size = get_embedding_dimension()
         client.create_collection(
             collection_name=name,
             vectors_config=VectorParams(size=size, distance=Distance.COSINE),

@@ -46,11 +46,16 @@ cp frontend/.env.example frontend/.env.local
 Required in `backend/.env`:
 - `QDRANT_URL`, `QDRANT_API_KEY`
 - `DEEPSEEK_API_KEY`
+- `OPENAI_API_KEY` (or `VOYAGE_API_KEY` if using Voyage)
+- `EMBEDDING_PROVIDER=openai` (or `voyage`)
+- `EMBEDDING_MODEL=text-embedding-3-large`, `EMBEDDING_DIMENSIONS=1024`
 - `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`
 - `ADMIN_API_KEY` (strong secret for review queue)
 - `CORS_ORIGINS` (production frontend URLs)
 - `CORS_ORIGIN_REGEX` (optional; e.g. `https://.*\\.vercel\\.app`)
-- `EMBEDDING_MODEL=BAAI/bge-m3`, `HYBRID_SEARCH_ENABLED=true`
+- `HYBRID_SEARCH_ENABLED=true`
+
+See [docs/EMBEDDINGS.md](docs/EMBEDDINGS.md).
 
 ### 2. Database (Supabase SQL Editor)
 

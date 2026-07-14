@@ -14,12 +14,21 @@ class Settings(BaseSettings):
     deepseek_api_key: str = ""
     deepseek_base_url: str = "https://api.deepseek.com"
 
+    # Hosted embeddings (recommended for production)
+    # openai | voyage | local
+    embedding_provider: str = "openai"
+    openai_api_key: str = ""
+    openai_base_url: str = ""
+    voyage_api_key: str = ""
+    embedding_api_key: str = ""  # optional shared override
+    embedding_model: str = "text-embedding-3-large"
+    embedding_dimensions: int = 1024
+    embedding_query_prefix: bool = False  # mainly for local BGE
+    warm_embedding_on_startup: bool = False
+
     supabase_url: str = ""
     supabase_service_key: str = ""
 
-    embedding_model: str = "BAAI/bge-large-en-v1.5"
-    embedding_query_prefix: bool = True
-    warm_embedding_on_startup: bool = False
     top_k: int = 5
     chunk_size: int = 1200
     chunk_overlap: int = 120

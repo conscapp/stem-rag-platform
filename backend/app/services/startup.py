@@ -1,4 +1,4 @@
-"""Startup helpers for production: optional embedding warm + BM25 ensure."""
+"""Startup helpers: BM25 ensure; hosted embeddings need no warm-up."""
 
 from __future__ import annotations
 
@@ -8,32 +8,34 @@ logger = logging.getLogger("conscrag.startup")
 
 
 def warm_embedding_model() -> None:
-    """Load embedding weights. Never crash the API if this fails (OOM / download)."""
     from app.config import get_settings
+    from app.services.embeddings import get_provider
 
     settings = get_settings()
-    if not settings.warm_embedding_on_startup:
+    provider = get_provider()
+    if provider in ("openai", "voyage"):
         logger.info(
-            "Skipping embedding warm-up (WARM_EMBEDDING_ON_STARTUP=false); "
-            "model loads on first query"
+            "Using hosted embeddings (%s / %s); no local model load",
+            provider,
+            settings.embedding_model,
         )
         return
 
+    if not settings.warm_embedding_on_startup:
+        logger.info("Skipping local embedding warm-up")
+        return
+
     try:
-        from app.services.embeddings import get_encoder, get_embedding_dimension
+        from app.services.embeddings import get_embedding_dimension, get_encoder
 
         dim = get_embedding_dimension()
         _ = get_encoder()
-        logger.info("Embedding model ready (dim=%s)", dim)
+        logger.info("Local embedding model ready (dim=%s)", dim)
     except Exception:
-        logger.exception(
-            "Embedding warm-up failed — API will start anyway; "
-            "queries may fail until memory/model is fixed"
-        )
+        logger.exception("Local embedding warm-up failed — API still starts")
 
 
 def ensure_bm25_ready() -> None:
-    """Load BM25 from disk; if empty, rebuild from Qdrant."""
     try:
         from app.services.bm25_index import get_bm25_index
         from app.services.ingest_pipeline import merge_bm25_from_qdrant

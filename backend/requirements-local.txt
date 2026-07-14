@@ -1,0 +1,4 @@
+# Optional: only if EMBEDDING_PROVIDER=local
+-r requirements.txt
+sentence-transformers>=3.3.0
+torch
