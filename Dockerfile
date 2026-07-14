@@ -11,8 +11,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     HF_HOME=/app/.cache/huggingface \
     TRANSFORMERS_CACHE=/app/.cache/huggingface \
     SENTENCE_TRANSFORMERS_HOME=/app/.cache/sentence-transformers \
-    EMBEDDING_MODEL=BAAI/bge-m3 \
+    EMBEDDING_MODEL=BAAI/bge-large-en-v1.5 \
     EMBEDDING_QUERY_PREFIX=true \
+    WARM_EMBEDDING_ON_STARTUP=false \
     HYBRID_SEARCH_ENABLED=true \
     BM25_INDEX_PATH=data/index/bm25_corpus.json
 

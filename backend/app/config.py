@@ -17,8 +17,9 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_service_key: str = ""
 
-    embedding_model: str = "BAAI/bge-m3"
+    embedding_model: str = "BAAI/bge-large-en-v1.5"
     embedding_query_prefix: bool = True
+    warm_embedding_on_startup: bool = False
     top_k: int = 5
     chunk_size: int = 1200
     chunk_overlap: int = 120

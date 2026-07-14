@@ -1,4 +1,4 @@
-"""Startup helpers for production: warm embeddings + ensure BM25 index."""
+"""Startup helpers for production: optional embedding warm + BM25 ensure."""
 
 from __future__ import annotations
 
@@ -8,6 +8,17 @@ logger = logging.getLogger("conscrag.startup")
 
 
 def warm_embedding_model() -> None:
+    """Load embedding weights. Never crash the API if this fails (OOM / download)."""
+    from app.config import get_settings
+
+    settings = get_settings()
+    if not settings.warm_embedding_on_startup:
+        logger.info(
+            "Skipping embedding warm-up (WARM_EMBEDDING_ON_STARTUP=false); "
+            "model loads on first query"
+        )
+        return
+
     try:
         from app.services.embeddings import get_encoder, get_embedding_dimension
 
@@ -15,8 +26,10 @@ def warm_embedding_model() -> None:
         _ = get_encoder()
         logger.info("Embedding model ready (dim=%s)", dim)
     except Exception:
-        logger.exception("Failed to warm embedding model")
-        raise
+        logger.exception(
+            "Embedding warm-up failed — API will start anyway; "
+            "queries may fail until memory/model is fixed"
+        )
 
 
 def ensure_bm25_ready() -> None:

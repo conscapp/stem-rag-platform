@@ -1,4 +1,4 @@
-"""High-performance dense embeddings with BGE query instructions."""
+"""Dense embeddings with BGE query instructions (CPU-friendly load)."""
 
 from __future__ import annotations
 
@@ -15,7 +15,12 @@ DOC_PREFIX = ""
 @lru_cache
 def get_encoder() -> SentenceTransformer:
     settings = get_settings()
-    return SentenceTransformer(settings.embedding_model)
+    # CPU + low mem: Railway small instances OOM on BGE-M3
+    return SentenceTransformer(
+        settings.embedding_model,
+        device="cpu",
+        model_kwargs={"low_cpu_mem_usage": True},
+    )
 
 
 def get_embedding_dimension() -> int:
