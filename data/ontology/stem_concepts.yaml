@@ -1,0 +1,267 @@
+# conscRAG cross-STEM concept ontology
+# Information-science layer: maps vocabulary across physics, chemistry, math, engineering
+
+newton_laws:
+  aliases: [newton's laws, newtons laws, inertia, f=ma, force mass acceleration, action reaction]
+  subjects: [physics, engineering]
+  links: [conservation_energy, mechanics]
+
+conservation_energy:
+  aliases: [conservation of energy, energy conservation, mechanical energy, kinetic energy, potential energy, work energy]
+  subjects: [physics, engineering, math]
+  links: [thermodynamics, newton_laws]
+
+conservation_momentum:
+  aliases: [conservation of momentum, momentum conservation, impulse]
+  subjects: [physics, engineering]
+  links: [newton_laws, mechanics]
+
+thermodynamics:
+  aliases: [thermodynamic, heat transfer, energy balance, delta u, internal energy, first law thermodynamics, carnot]
+  subjects: [physics, chemistry, engineering]
+  links: [entropy, heat_transfer, ideal_gas]
+
+entropy:
+  aliases: [thermodynamic entropy, shannon entropy, disorder, delta s, second law]
+  subjects: [physics, chemistry, math]
+  links: [thermodynamics, gibbs_free_energy, information_theory]
+
+heat_transfer:
+  aliases: [conduction, convection, radiation, fourier's law, newton's law of cooling, stefan-boltzmann, heat loss, thermal conductivity]
+  subjects: [physics, engineering]
+  links: [thermodynamics, fluid_mechanics]
+
+ideal_gas:
+  aliases: [ideal gas law, pv=nrt, gas law]
+  subjects: [physics, chemistry]
+  links: [thermodynamics, stoichiometry]
+
+electromagnetism:
+  aliases: [maxwell, maxwell equations, maxwell's equations, coulomb, faraday, ampere, electromagnetic wave, electric field, magnetic flux, lorentz force, gauss law, displacement current, poynting]
+  subjects: [physics, engineering]
+  links: [circuits, optics, plasma_physics]
+
+circuits:
+  aliases: [ohm's law, ohms law, resistor, voltage current, electric circuit, power dissipation]
+  subjects: [physics, engineering]
+  links: [electromagnetism, electrochemistry]
+
+fluid_mechanics:
+  aliases: [bernoulli, bernoulli's equation, continuity equation, reynolds number, darcy-weisbach, head loss, pipe flow, laminar turbulent, navier-stokes, navier stokes, boundary layer, mach number, incompressible flow]
+  subjects: [physics, engineering]
+  links: [thermodynamics, heat_transfer, aerodynamics]
+
+mechanics:
+  aliases: [rotational motion, torque, centripetal, angular acceleration, moment of inertia, stress strain]
+  subjects: [physics, engineering]
+  links: [newton_laws, materials_science]
+
+materials_science:
+  aliases: [young's modulus, elastic modulus, factor of safety, structural stress, yield strength, deformation]
+  subjects: [engineering, physics, chemistry]
+  links: [mechanics, chemical_bonding]
+
+chemical_bonding:
+  aliases: [ionic bond, covalent bond, metallic bond, bond order, bond strength]
+  subjects: [chemistry, physics]
+  links: [atomic_structure, materials_science]
+
+atomic_structure:
+  aliases: [atom, proton, neutron, electron, atomic number, mass number, periodic table]
+  subjects: [chemistry, physics]
+  links: [electrochemistry, stoichiometry]
+
+stoichiometry:
+  aliases: [mole, molar mass, concentration, dilution, stoichiometric]
+  subjects: [chemistry, math]
+  links: [equilibrium, ideal_gas]
+
+thermochemistry:
+  aliases: [enthalpy, delta h, hess's law, hess law, heat of reaction]
+  subjects: [chemistry, physics]
+  links: [thermodynamics, gibbs_free_energy]
+
+gibbs_free_energy:
+  aliases: [gibbs energy, gibbs free energy, delta g, spontaneity, free energy, van't hoff, chemical potential]
+  subjects: [chemistry, physics]
+  links: [entropy, thermochemistry, equilibrium]
+
+equilibrium:
+  aliases: [chemical equilibrium, le chatelier, equilibrium constant, k_eq, reaction quotient]
+  subjects: [chemistry, physics]
+  links: [stoichiometry, gibbs_free_energy]
+
+reaction_kinetics:
+  aliases: [rate law, arrhenius equation, activation energy, reaction rate]
+  subjects: [chemistry, physics, engineering]
+  links: [equilibrium, thermochemistry]
+
+electrochemistry:
+  aliases: [nernst equation, redox, electrode potential, battery, galvanic cell]
+  subjects: [chemistry, physics, engineering]
+  links: [circuits, atomic_structure]
+
+acid_base:
+  aliases: [ph, pka, weak acid, acid base, hydroxide, proton donor]
+  subjects: [chemistry]
+  links: [equilibrium, stoichiometry]
+
+calculus:
+  aliases: [derivative, integral, limit, differential equation, chain rule, fundamental theorem, fundamental theorem of calculus, antiderivative, riemann sum, partial derivative, gradient, multivariable calculus, jacobian, divergence theorem, stokes theorem, l'hopital, difference quotient, definite integral, indefinite integral]
+  subjects: [math, physics, engineering]
+  links: [linear_algebra, differential_equations, series]
+
+differential_equations:
+  aliases: [ode, pde, characteristic equation, integrating factor, second order, ordinary differential equation, partial differential equation, separable equation, initial value problem, boundary value problem, wronskian, sturm-liouville, heat equation, wave equation]
+  subjects: [math, physics, engineering]
+  links: [calculus, linear_algebra, series]
+
+linear_algebra:
+  aliases: [matrix, eigenvalue, determinant, vector space, linear transformation, eigenvector, diagonalization, least squares, orthogonal projection]
+  subjects: [math, physics, engineering]
+  links: [calculus, information_theory, differential_equations]
+
+variational_methods:
+  aliases: [calculus of variations, euler-lagrange, variational principle, action principle, functional optimization]
+  subjects: [math, physics, engineering]
+  links: [calculus, differential_equations, mechanics]
+
+real_analysis:
+  aliases: [epsilon delta, uniform continuity, sobolev, functional analysis, measure theory, convergence of sequences]
+  subjects: [math]
+  links: [calculus, series, differential_equations]
+
+information_theory:
+  aliases: [shannon, information entropy, mutual information, data capacity, coding theory]
+  subjects: [math, physics]
+  links: [entropy, linear_algebra]
+
+series:
+  aliases: [taylor series, fourier series, power series, convergence, radius of convergence, geometric series, maclaurin series]
+  subjects: [math, physics, engineering]
+  links: [calculus, differential_equations]
+
+porous_media:
+  aliases: [darcy's law, permeability, porosity, filtration, porous ceramic]
+  subjects: [engineering, physics]
+  links: [fluid_mechanics]
+
+solar_energy:
+  aliases: [solar panel, solar irradiance, photovoltaic, solar collector, solar water heater]
+  subjects: [engineering, physics]
+  links: [heat_transfer, thermodynamics, circuits]
+
+pumping_systems:
+  aliases: [pump power, total head, pump efficiency, water pumping]
+  subjects: [engineering, physics]
+  links: [fluid_mechanics, conservation_energy]
+
+optics:
+  aliases: [light speed, wavelength, frequency, electromagnetic spectrum]
+  subjects: [physics]
+  links: [electromagnetism]
+
+probability:
+  aliases: [bayes, stochastic, statistical, distribution, uncertainty]
+  subjects: [math, physics, chemistry]
+  links: [information_theory, reaction_kinetics]
+
+orbital_mechanics:
+  aliases: [orbit, orbital velocity, leo, low earth orbit, escape velocity, centripetal orbit, delta v budget]
+  subjects: [physics, math, engineering]
+  domains: [aerospace]
+  links: [conservation_energy, conservation_momentum, rocketry]
+
+rocketry:
+  aliases: [rocket equation, tsiolkovsky, specific impulse, isp, propulsion, thrust, exhaust velocity, staging]
+  subjects: [physics, engineering, chemistry]
+  domains: [aerospace]
+  links: [orbital_mechanics, thermodynamics, conservation_momentum]
+
+nanoparticles:
+  aliases: [nanoparticle, nanomaterial, colloid, quantum dot, nanostructure]
+  subjects: [chemistry, physics, engineering]
+  domains: [nanotechnology]
+  links: [surface_area, quantum_confinement, chemical_bonding]
+
+surface_area:
+  aliases: [surface to volume, surface-to-volume ratio, specific surface area]
+  subjects: [chemistry, physics, math]
+  domains: [nanotechnology]
+  links: [nanoparticles, reaction_kinetics]
+
+quantum_confinement:
+  aliases: [quantum confinement, band gap, exciton, bohr radius, semiconductor nanoparticle]
+  subjects: [physics, chemistry]
+  domains: [nanotechnology]
+  links: [nanoparticles, electrochemistry]
+
+energy_storage:
+  aliases: [battery, energy density, grid storage, pumped hydro, capacity factor, round trip efficiency]
+  subjects: [chemistry, engineering, physics]
+  links: [electrochemistry, thermodynamics, conservation_energy]
+
+renewable_generation:
+  aliases: [renewable energy, photovoltaic, wind turbine, solar thermal]
+  subjects: [physics, engineering]
+  links: [solar_energy, thermodynamics, heat_transfer]
+
+nuclear_fusion:
+  aliases: [fusion energy, D-T fusion, deuterium tritium, tokamak, ITER, inertial confinement, fusion reactor, Q factor, breakeven, ignition, nuclear energy, make fusion, hydrogen fusion, room temperature nuclear]
+  subjects: [physics, engineering, chemistry]
+  domains: [clean_energy]
+  links: [plasma_physics, thermodynamics, conservation_energy, electromagnetism, hydrogen_isotopes]
+
+plasma_physics:
+  aliases: [plasma confinement, confinement time, triple product, Lawson criterion, plasma beta, magnetic confinement, tokamak scaling, hot fusion, plasma temperature]
+  subjects: [physics, engineering]
+  domains: [clean_energy]
+  links: [nuclear_fusion, electromagnetism, thermodynamics]
+
+hydrogen_isotopes:
+  aliases: [hydrogen isotope, protium, deuterium, tritium, helium-3 fuel, He-3 fusion, other isotope, D-D fusion, p-B11, proton boron]
+  subjects: [physics, chemistry]
+  domains: [clean_energy]
+  links: [nuclear_fusion, conservation_energy]
+
+cold_fusion:
+  aliases: [cold fusion, LENR, low energy nuclear reactions, room temperature fusion, ambient fusion, nuclear energy at room temperature, fusion at room temperature]
+  subjects: [physics, chemistry]
+  domains: [clean_energy]
+  links: [nuclear_fusion, thermodynamics]
+
+aerodynamics:
+  aliases: [aerodynamic heating, re-entry, drag, lift, atmospheric flight]
+  subjects: [physics, engineering]
+  domains: [aerospace]
+  links: [fluid_mechanics, heat_transfer]
+
+premium_source:
+  aliases: [peer-reviewed, technical report, patent literature, NTRS, premium knowledge]
+  subjects: [physics, engineering, chemistry]
+  domains: [aerospace, nanotechnology, clean_energy]
+  links: [technical_report, failed_experiment, patent_literature]
+
+technical_report:
+  aliases: [NASA technical report, NTRS, STI report, technical memorandum]
+  subjects: [engineering, physics]
+  domains: [aerospace, clean_energy]
+  links: [premium_source]
+
+failed_experiment:
+  aliases: [failed research, negative result, null result, not reproduced, discontinued program]
+  subjects: [physics, chemistry, engineering]
+  domains: [clean_energy, aerospace, nanotechnology]
+  links: [lesson_learned, premium_source]
+
+lesson_learned:
+  aliases: [lessons learned, what went wrong, design failure, program termination]
+  subjects: [engineering]
+  domains: [aerospace, clean_energy]
+  links: [failed_experiment]
+
+patent_literature:
+  aliases: [patent, USPTO, claims section, prior art]
+  subjects: [engineering]
+  domains: [nanotechnology, aerospace, clean_energy]
+  links: [premium_source]

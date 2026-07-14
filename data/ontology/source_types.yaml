@@ -1,0 +1,50 @@
+# Source-type taxonomy and domain query expansions for information science layer
+
+premium_source:
+  aliases: ["peer-reviewed", "technical report", "patent", "NTRS"]
+  subjects: [physics, engineering, chemistry]
+  domains: [aerospace, nanotechnology, clean_energy]
+  links: [technical_report, failed_experiment]
+
+technical_report:
+  aliases: ["NASA technical report", "NTRS", "STI report", "technical memorandum"]
+  subjects: [engineering, physics]
+  domains: [aerospace, clean_energy]
+  links: [premium_source]
+
+failed_experiment:
+  aliases: ["failed research", "negative result", "null result", "not reproduced"]
+  subjects: [physics, chemistry, engineering]
+  domains: [clean_energy, aerospace, nanotechnology]
+  links: [lesson_learned, premium_source]
+
+lesson_learned:
+  aliases: ["lessons learned", "what went wrong", "design failure", "program termination"]
+  subjects: [engineering]
+  domains: [aerospace, clean_energy]
+  links: [failed_experiment]
+
+patent_literature:
+  aliases: ["patent", "USPTO", "claims", "prior art"]
+  subjects: [engineering]
+  domains: [nanotechnology, aerospace, clean_energy]
+  links: [premium_source]
+
+domain_query_expansions:
+  clean_energy:
+    - nuclear fusion
+    - plasma confinement
+    - tokamak
+    - tritium breeding
+    - Lawson criterion
+    - cold fusion history
+  aerospace:
+    - propulsion
+    - orbital mechanics
+    - thermal protection
+    - NTRS
+  nanotechnology:
+    - nanoscale materials
+    - quantum dots
+    - MEMS
+    - surface functionalization

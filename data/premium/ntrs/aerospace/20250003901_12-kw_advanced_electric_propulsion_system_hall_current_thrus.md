@@ -1,0 +1,53 @@
+---
+title: "12-kW Advanced Electric Propulsion System Hall Current Thruster Qualification and Production Status"
+source_type: ntrs
+source_tier: premium
+document_id: "20250003901"
+publisher: NASA NTRS
+domains:
+  - aerospace
+authors:
+  - {'orcidId': '', 'name': 'Rohit Shastry'}
+  - {'orcidId': '', 'name': 'Hani Kamhawi'}
+  - {'orcidId': '', 'name': 'Jason D Frieman'}
+  - {'orcidId': '', 'name': 'George C Soulas'}
+  - {'orcidId': '', 'name': 'Timothy G Gray'}
+  - {'orcidId': '', 'name': 'Timothy R Verhey'}
+  - {'orcidId': '', 'name': 'Clayton D Kachele'}
+  - {'orcidId': '', 'name': 'George J Williams'}
+  - {'name': 'Nagual A Simmons'}
+  - {'orcidId': '', 'name': 'Robert B Lobbia'}
+  - {'orcidId': '', 'name': 'Steven M Arestie'}
+  - {'orcidId': '', 'name': 'Vernon H Chaplin'}
+  - {'name': 'Jack Fisher'}
+  - {'name': 'Gabriella Blackner'}
+  - {'name': 'Eleanor Forbes'}
+  - {'name': 'Jack Hondagneu'}
+  - {'orcidId': '', 'name': 'Nicholas A Branch'}
+  - {'orcidId': '', 'name': 'Jonathan M Zubair'}
+  - {'name': 'Hannah Watts'}
+year: null
+subject: engineering
+concepts:
+  - technical_report
+  - premium_source
+outcome: unknown
+---
+
+# 12-kW Advanced Electric Propulsion System Hall Current Thruster Qualification and Production Status
+
+## Summary
+
+12-kW Advanced Electric Propulsion System Hall Current Thruster Qualification and Production Status
+
+## Abstract
+
+Initial developments by the National Aeronautics and Space Administration (NASA) of a 12-kW-class Hall thruster began with  maturation  of  the  Hall  Effect  Rocket  with  Magnetic  Shielding,  which was then  transitioned  to  industry  via  the Advanced Electric Propulsion System contract.  This contract was awarded to Aerojet Rocketdyne (now part of L3Harris)in 2016 with the goal of developing and fully qualifying a 12 kW Hall thruster for NASA and commercial applications, with its first intended use on the Power and Propulsion Element as part of NASA’s Gateway lunar space station.  This paper  describes  the  status  of  the  contract,  including  production  and  qualification  efforts  after  the  thruster  design successfully passed Critical Design Review in 2022, as well as NASA-led independent testing in support of development and qualification. To-date, the first qualification thruster has successfully undergone pre-environmental characterization testing,  qualification  vibration  and  shock  testing,  with preparations  for thermal  vacuum testing underway at  time  of writing.  Additional qualification testing of components such as the cathode, magnet coils, and thermal components are ongoing to demonstrate design robustness of these critical thruster elements. Flight hardware fabrication and testing is expected to be completed by 2025, at which point the hardware will be delivered to Maxar Technologies for integration and use on the Power and Propulsion Element spacecraft.
+
+## Keywords
+
+electric propulsion, Hall thruster
+
+## NASA Center
+
+{'code': 'GRC', 'name': 'Glenn Research Center', 'id': '19eeb25fa404421d9eaa5f876e853e3c'}
