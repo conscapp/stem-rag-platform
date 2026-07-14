@@ -1,9 +1,9 @@
-# Railway: deploy from repository root with Docker
-# Allocate ≥4 GB RAM for BGE-M3 embeddings
+# Railway: leave Root Directory EMPTY (repository root)
+# Set service memory to at least 4 GB after first successful build
 
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "backend/Dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 healthcheckPath = "/api/health"

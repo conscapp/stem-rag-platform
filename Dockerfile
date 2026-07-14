@@ -1,6 +1,7 @@
-# Build from repository root:
-#   docker build -f backend/Dockerfile .
-# Prefer root Dockerfile on Railway (see /Dockerfile).
+# Build from repository root (Railway default):
+#   docker build -f Dockerfile .
+#
+# Do NOT set Railway "Root Directory" to backend — leave it empty.
 
 FROM python:3.11-slim
 
@@ -22,6 +23,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY backend/requirements.txt /app/backend/requirements.txt
+
+# CPU-only PyTorch first (much smaller / more reliable on Railway than CUDA wheels)
 RUN pip install --upgrade pip \
     && pip install torch --index-url https://download.pytorch.org/whl/cpu \
     && pip install -r /app/backend/requirements.txt
@@ -36,6 +39,7 @@ ENV PYTHONPATH=/app/backend
 
 EXPOSE 8000
 
+# Model downloads on first boot via lifespan — allow a long start window
 HEALTHCHECK --interval=30s --timeout=10s --start-period=300s --retries=5 \
   CMD curl -fsS "http://127.0.0.1:${PORT:-8000}/api/health" || exit 1
 
