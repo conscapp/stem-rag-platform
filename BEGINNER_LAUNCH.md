@@ -64,8 +64,8 @@ git push -u origin main
 
 8. **Settings** → memory around **1 GB** is enough (hosted embeddings).
 9. **Settings** → **Networking** → **Generate domain**.
-10. Copy the URL (looks like `https://xxxxx.up.railway.app`).
-11. In the browser open: `https://xxxxx.up.railway.app/api/health`  
+10. Copy the URL (this project: `https://stem-rag-platform-production.up.railway.app`).
+11. In the browser open: `https://stem-rag-platform-production.up.railway.app/api/health`  
     You want: `"qdrant":"ok"` and `"supabase":"ok"`.
 
 **First deploy is usually a few minutes** with the slim Docker image. Wait for “Success”.
@@ -74,42 +74,115 @@ git push -u origin main
 
 ## STEP C — Vercel (the website)
 
-1. Open [vercel.com](https://vercel.com) → **Login** with GitHub.
-2. **Add New Project** → import the same GitHub repo.
-3. **Root Directory** → click Edit → type `frontend` → Continue.
-4. **Environment Variables** → add one:
+**Already deployed:** https://stem-rag-platform.vercel.app  
+(Homepage / `/create` load in ~1–5 seconds. The site alone is live.)
+
+**Production API URL is set:** `NEXT_PUBLIC_API_URL=https://stem-rag-platform-production.up.railway.app` (CLI redeploy done).
+
+What is still missing: **STEP D — CORS on Railway** so the browser can call the API.
+
+1. Open [vercel.com](https://vercel.com) → project **stem-rag-platform**.
+2. **Settings → Environment Variables** → add (Production + Preview):
 
 - Name: `NEXT_PUBLIC_API_URL`
-- Value: your Railway URL from STEP B (**no** trailing slash), e.g. `https://xxxxx.up.railway.app`
+- Value: `https://stem-rag-platform-production.up.railway.app` (**no** trailing slash)
 
-5. Click **Deploy**. Wait until it finishes.
-6. Click the `.vercel.app` link Vercel gives you.
-7. Try **/create** and ask a question.
+3. **Deployments → … → Redeploy** (required after changing `NEXT_PUBLIC_*`).
+4. Open https://stem-rag-platform.vercel.app/create and ask a short fusion question.
+5. If the spinner runs **10–60+ seconds**, that is normal LLM time — not the website cold-starting.
+
+*(CLI alternative after you paste the Railway URL in chat: we can set the env and redeploy for you.)*
 
 ---
 
 ## STEP D — Fix CORS (so the website can talk to the API)
 
-1. Go back to Railway → Variables.
-2. Edit `CORS_ORIGINS` to include your Vercel URL, example:
+1. Go back to Railway → your **stem-rag-platform** service → **Variables**.
+2. Set or update these (paste exactly — Railway CLI was not logged in on the deploy machine):
 
-`https://conscrag.com,https://www.conscrag.com,https://your-project.vercel.app`
+```text
+CORS_ORIGINS=https://conscrag.com,https://www.conscrag.com,https://stem-rag-platform.vercel.app
+CORS_ORIGIN_REGEX=https://.*\.vercel\.app
+```
 
-3. Save (Railway will redeploy).
-4. Refresh the Vercel site and try **/create** again.
+3. **Save** (Railway will redeploy).
+4. Confirm CORS: in browser DevTools on `/create`, or run:
+
+```powershell
+curl.exe -sS -D - -o NUL -H "Origin: https://stem-rag-platform.vercel.app" "https://stem-rag-platform-production.up.railway.app/api/health"
+```
+
+You should see `access-control-allow-origin: https://stem-rag-platform.vercel.app`.
+
+5. Refresh https://stem-rag-platform.vercel.app/create and try a short fusion question (first answer may take **10–60+ seconds**).
 
 ---
 
-## STEP E — Custom domain later (optional)
+## STEP E — Optional: UptimeRobot (keep API warm / alert)
 
-Only after STEP C works. Point `conscrag.com` to Vercel in your domain registrar using the DNS records Vercel shows under **Domains**.
+1. Open [uptimerobot.com](https://uptimerobot.com) → free account.
+2. Add monitor → **HTTP(s)**.
+3. URL: `https://stem-rag-platform-production.up.railway.app/api/health` (same URL that returns `"qdrant":"ok"`).
+4. Interval: **every 5 minutes**.
+
+This is **not** required for Hobby, but it warns you if Railway is down and can reduce idle surprises.
+
+---
+
+## Cold starts vs slow answers (read once)
+
+| Piece | What to expect |
+|-------|----------------|
+| Vercel site load | Usually **1–5 seconds** — **not** 1–2 minutes |
+| Railway Hobby | Stays warmer than the old free trial |
+| First answer on `/create` | Often **10–60+ seconds** — LLM/agents, not “site cold start” |
+
+If the homepage is fast but `/create` spins a long time, that is normal query latency.
+
+---
+
+## STEP F — Custom domain (conscrag.com)
+
+**Already done on Vercel:** `conscrag.com` and `www.conscrag.com` are added to project **stem-rag-platform**.  
+**Already done on Railway:** CORS allows `https://conscrag.com` and `https://www.conscrag.com`.
+
+**You only need to update DNS** at your domain registrar (current nameservers: `dns1.registrar-servers.com` / `dns2.registrar-servers.com` — typical Namecheap).
+
+### Option A — DNS records (recommended)
+
+In your registrar’s **Advanced DNS** (or DNS zone), add or replace:
+
+| Type | Host | Value | TTL |
+|------|------|-------|-----|
+| **A** | `@` | `76.76.21.21` | Automatic / 300 |
+| **A** | `www` | `76.76.21.21` | Automatic / 300 |
+
+Remove conflicting old **A** or **CNAME** rows for `@` and `www` if they point elsewhere.
+
+### Option B — Vercel nameservers (alternative)
+
+Point the domain’s nameservers to:
+
+- `ns1.vercel-dns.com`
+- `ns2.vercel-dns.com`
+
+Vercel then manages all DNS. Use this only if you want Vercel to host DNS for the whole domain.
+
+### After DNS propagates (5–60 minutes, sometimes up to 24h)
+
+1. Vercel → **stem-rag-platform** → **Domains** — both domains should show **Valid**.
+2. Open https://conscrag.com and https://www.conscrag.com/create
+3. Ask a short fusion question (10–60s for first answer is normal).
+
+No Railway or Vercel env changes needed — API URL stays `https://stem-rag-platform-production.up.railway.app`.
 
 ---
 
 ## If something fails
 
 Reply with:
-- Which STEP letter (A/B/C/D)
+- Which STEP letter (A/B/C/D/E)
 - Exact error text or a screenshot description
+- Your Railway public URL (e.g. `https://….up.railway.app`) — **no** API keys
 
 Do not paste API keys or passwords.

@@ -91,8 +91,20 @@ export async function checkNovelty(data: {
 }
 
 export async function listPosts(limit = 20, offset = 0): Promise<Post[]> {
-  const res = await fetch(`${API_URL}/api/posts?limit=${limit}&offset=${offset}`);
-  if (!res.ok) throw new Error("Failed to load posts");
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/api/posts?limit=${limit}&offset=${offset}`);
+  } catch {
+    throw new Error(
+      "Could not reach the API. Check your connection, or confirm NEXT_PUBLIC_API_URL points to Railway."
+    );
+  }
+  if (res.status === 503) {
+    throw new Error("Portfolio is temporarily unavailable. Please try again shortly.");
+  }
+  if (!res.ok) {
+    throw new Error("Failed to load portfolio posts.");
+  }
   return res.json();
 }
 

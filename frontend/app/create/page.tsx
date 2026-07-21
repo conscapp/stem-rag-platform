@@ -108,7 +108,7 @@ export default function CreatePage() {
         publish_consent: publishConsent,
       });
       setSuccess(
-        "Submitted for review. Sponsored innovations appear in our public portfolio after approval."
+        "Submitted for review. Cross-domain ideas score higher — approved explorations appear in the portfolio."
       );
       setTimeout(() => router.push("/feed"), 3000);
     } catch (err) {
@@ -121,12 +121,18 @@ export default function CreatePage() {
   return (
     <div className="page-container create-page">
       <div className="page-header">
-        <p className="platform-eyebrow">Innovation Lab</p>
-        <h1 className="platform-title">Explore an Idea</h1>
+        <p className="platform-eyebrow">Innovation Lab · No experience needed</p>
+        <h1 className="platform-title">Generate your idea</h1>
         <p className="page-desc">
-          Type a hunch, question, or possibility in plain language. Our agents translate it,
-          retrieve cross-STEM evidence, connect what we know, and show what is still missing.
+          Type a hunch in plain language — no experience needed. The four-agent pipeline turns it
+          into cross-STEM evidence, connections, and next questions — usually in 30–60 seconds.
+          STEM explorers: publish for review — cross-domain ideas score higher.
         </p>
+        <div className="create-expectations" aria-label="What to expect">
+          <span><strong>1</strong> Ask naturally</span>
+          <span><strong>2</strong> Wait 30–60 sec</span>
+          <span><strong>3</strong> Review evidence</span>
+        </div>
       </div>
 
       <QueryBox
@@ -273,7 +279,7 @@ export default function CreatePage() {
               onClick={handleSubmit}
               disabled={submitting || !title.trim() || !content.trim() || !innovationSummary.trim() || !domain || !termsAccepted || !publishConsent}
             >
-              {submitting ? "Submitting…" : "Share with Community"}
+              {submitting ? "Submitting…" : "Publish for review"}
             </button>
           </div>
 

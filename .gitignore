@@ -3,6 +3,7 @@
 .env.local
 backend/.env
 frontend/.env.local
+deploy/railway-paste.env
 
 # Python
 __pycache__/

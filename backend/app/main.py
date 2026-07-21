@@ -57,10 +57,23 @@ async def health() -> HealthResponse:
     except Exception:
         qdrant_status = "error"
 
-    supabase_status = "ok" if get_supabase_client() is not None else "not_configured"
+    supabase_status = "not_configured"
+    client = get_supabase_client()
+    if client is not None:
+        try:
+            client.table("public_posts").select("id").limit(1).execute()
+            supabase_status = "ok"
+        except Exception:
+            supabase_status = "error"
+
+    overall = "ok"
+    if qdrant_status != "ok" or supabase_status == "error":
+        overall = "degraded"
+    if supabase_status == "not_configured":
+        overall = "degraded"
 
     return HealthResponse(
-        status="ok" if qdrant_status == "ok" else "degraded",
+        status=overall,
         qdrant=qdrant_status,
         supabase=supabase_status,
     )

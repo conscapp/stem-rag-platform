@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
+from secrets import compare_digest
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, Header, HTTPException
-from uuid import UUID
 
 from app.config import get_settings
 from app.models.schemas import PostResponse, PostReviewAction, PostStatus
@@ -14,9 +15,9 @@ router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 def verify_admin(x_admin_key: str = Header(..., alias="X-Admin-Key")) -> None:
     settings = get_settings()
-    if not settings.admin_api_key or x_admin_key != settings.admin_api_key:
+    expected = settings.admin_api_key or ""
+    if not expected or not compare_digest(x_admin_key, expected):
         raise HTTPException(status_code=403, detail="Invalid admin key")
-
 
 @router.get("/pending", response_model=list[PostResponse])
 async def list_pending(_: None = Depends(verify_admin)) -> list[PostResponse]:

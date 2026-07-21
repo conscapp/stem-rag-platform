@@ -20,19 +20,34 @@ router = APIRouter(prefix="/api", tags=["posts"])
 
 
 def _row_to_post(row: dict) -> PostResponse:
+    sources = row.get("sources") or []
+    if not isinstance(sources, list):
+        sources = []
+    disciplines = row.get("disciplines") or []
+    if not isinstance(disciplines, list):
+        disciplines = []
+
+    raw_status = row.get("status") or PostStatus.pending.value
+    try:
+        status = PostStatus(raw_status)
+    except ValueError:
+        status = PostStatus.pending
+
+    created_at = row.get("created_at") or datetime.now(timezone.utc)
+
     return PostResponse(
         id=row["id"],
-        author_name=row["author_name"],
-        title=row["title"],
-        content_markdown=row["content_markdown"],
-        sources=row.get("sources") or [],
+        author_name=row.get("author_name") or "anonymous",
+        title=row.get("title") or "Untitled",
+        content_markdown=row.get("content_markdown") or "",
+        sources=sources,
         domain=row.get("domain"),
-        status=row.get("status", "pending"),
+        status=status,
         novelty_score=row.get("novelty_score"),
-        disciplines=row.get("disciplines") or [],
+        disciplines=disciplines,
         innovation_summary=row.get("innovation_summary"),
         rejection_reason=row.get("rejection_reason"),
-        created_at=row["created_at"],
+        created_at=created_at,
         reviewed_at=row.get("reviewed_at"),
     )
 
@@ -72,15 +87,24 @@ async def list_posts(
     if client is None:
         raise HTTPException(status_code=503, detail="Database not configured")
 
-    result = (
-        client.table("public_posts")
-        .select("*")
-        .eq("status", PostStatus.approved.value)
-        .order("created_at", desc=True)
-        .range(offset, offset + limit - 1)
-        .execute()
-    )
-    return [_row_to_post(row) for row in result.data]
+    try:
+        result = (
+            client.table("public_posts")
+            .select("*")
+            .eq("status", PostStatus.approved.value)
+            .order("created_at", desc=True)
+            .range(offset, offset + limit - 1)
+            .execute()
+        )
+        rows = result.data or []
+        return [_row_to_post(row) for row in rows]
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Portfolio temporarily unavailable: {exc.__class__.__name__}",
+        ) from exc
 
 
 @router.get("/posts/{post_id}", response_model=PostResponse)
