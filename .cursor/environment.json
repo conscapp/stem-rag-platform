@@ -1,0 +1,16 @@
+{
+  "name": "conscRAG — STEM RAG platform",
+  "install": "bash .cursor/install.sh",
+  "start": "bash .cursor/start.sh",
+  "terminals": [
+    {
+      "name": "backend",
+      "command": "cd backend && source \"$HOME/.stem-rag/venv/bin/activate\" && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    },
+    {
+      "name": "frontend",
+      "command": "cd frontend && exec npm run dev"
+    }
+  ],
+  "ports": [3000, 8000, 6333]
+}
