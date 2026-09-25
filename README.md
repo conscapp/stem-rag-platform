@@ -83,6 +83,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Fieldplay, the research-board game, is at [http://localhost:3000/play](http://localhost:3000/play). See [Fieldplay](#fieldplay).
+
 ### 5. Grow the knowledge base (optional)
 
 ```bash
@@ -135,7 +137,7 @@ stem-rag-platform/
 ├── backend/          # FastAPI RAG API + Dockerfile
 │   ├── app/          # Application code
 │   └── scripts/      # Ingest, fetch, smoke
-├── frontend/         # Next.js web app
+├── frontend/         # Next.js web app (Fieldplay lives at /play)
 ├── data/
 │   ├── seed/         # STEM fundamentals + domains
 │   ├── premium/      # NTRS, arXiv, patents, failed research
@@ -143,6 +145,23 @@ stem-rag-platform/
 │   └── index/        # BM25 sparse index
 └── supabase/         # Database schema + migrations
 ```
+
+## Fieldplay
+
+Fieldplay is a strategy sandbox on the same Next.js app, at `/play`. Search real papers, drop them on an infinite board, edit the edges, and play four outcome scores. It is a game with written rules, not a model of science.
+
+```bash
+cd frontend
+npm install
+npm test
+npm run dev
+```
+
+Open [http://localhost:3000/play](http://localhost:3000/play). Boards stay in the browser under `localStorage` key `fieldplay.boards.v1`. No extra backend and no API key.
+
+Paper power is `influence × log10(1 + cited_by_count) × recency`, with `recency = clamp(0.35 + (year - 1990) / 80, 0.35, 1.4)`. A missing year uses 0.8. Missing citations count as 0. Edge types are supports, contradicts, extends, and causes (weight 0.1–2). Confidence, consensus, novelty, and impact are the clamped formulas in the in-app Rules drawer. Simulate reads the board. Direct keeps the dials where you set them and colors cards that agree or fight that choice. Mute, solo, and dropped edges are what-ifs. The outcome sentence is a template.
+
+Work metadata comes from [OpenAlex](https://openalex.org) (CC0). Fieldplay calls it through `/api/openalex` and sends `User-Agent: Fieldplay (research sandbox)`. The public API is rate-limited; search is debounced and a polite email is omitted because this app has no dedicated contact address.
 
 ## License
 
