@@ -137,7 +137,7 @@ stem-rag-platform/
 ├── backend/          # FastAPI RAG API + Dockerfile
 │   ├── app/          # Application code
 │   └── scripts/      # Ingest, fetch, smoke
-├── frontend/         # Next.js web app (Fieldplay lives at /play)
+├── frontend/         # Next.js web app (Fieldplay at /play, experiments at /experiments)
 ├── data/
 │   ├── seed/         # STEM fundamentals + domains
 │   ├── premium/      # NTRS, arXiv, patents, failed research
@@ -158,6 +158,8 @@ npm run dev
 ```
 
 Open [http://localhost:3000/play](http://localhost:3000/play). Boards stay in the browser under `localStorage` key `fieldplay.boards.v1`. No extra backend and no API key.
+
+[Experiments](http://localhost:3000/experiments) are local, instant, and separate from `/play` and from production data. The page opens with three slots, each already holding a built-in three-paper fixture, so a board is usable before any OpenAlex call. Slots stay in the current tab under `sessionStorage` key `fieldplay.experiments.v1` and are never written into the Fieldplay board library.
 
 Paper power is `influence × log10(1 + cited_by_count) × recency`, with `recency = clamp(0.35 + (year - 1990) / 80, 0.35, 1.4)`. A missing year uses 0.8. Missing citations count as 0. Edge types are supports, contradicts, extends, and causes (weight 0.1–2). Confidence, consensus, novelty, and impact are the clamped formulas in the in-app Rules drawer. Simulate reads the board. Direct keeps the dials where you set them and colors cards that agree or fight that choice. Mute, solo, and dropped edges are what-ifs. The outcome sentence is a template.
 

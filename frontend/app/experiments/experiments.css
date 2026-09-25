@@ -1,0 +1,180 @@
+/* Experiment lane. Does not use .fieldplay-root, so the play page keeps its fixed shell. */
+
+.fp-lane {
+  background: var(--fp-ink);
+  color: var(--fp-paper);
+  font-family: var(--fp-sans), "Outfit", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 100vh;
+  padding: calc(var(--header-h) + 1.25rem) 1.25rem 3rem;
+}
+
+.fp-lane h1 {
+  margin: 0.2rem 0 0.35rem;
+  font-family: var(--fp-serif), Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fp-paper);
+}
+
+.fp-lane-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fp-lane-new,
+.fp-slot-actions button,
+.fp-slot-search button {
+  border: 1px solid rgba(243, 234, 215, 0.28);
+  background: transparent;
+  color: var(--fp-paper);
+  padding: 0.55rem 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fp-lane-new {
+  background: var(--fp-teal);
+  border-color: var(--fp-teal);
+  color: #f3ead7;
+  white-space: nowrap;
+}
+
+.fp-slot-actions button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.fp-lane-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.fp-slot {
+  min-width: 0;
+  background: var(--fp-ink-2);
+  border: 1px solid var(--fp-line);
+  border-top: 3px solid var(--fp-teal);
+}
+
+.fp-slot-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.8rem;
+}
+
+.fp-slot-bar h2 {
+  margin: 0;
+  font-family: var(--fp-serif), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.fp-slot-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.fp-slot-canvas {
+  height: 420px;
+  border-top: 1px solid var(--fp-line);
+  border-bottom: 1px solid var(--fp-line);
+}
+
+.fp-lane .react-flow {
+  --xy-background-color: #0e1110;
+  --xy-background-pattern-color: rgba(243, 234, 215, 0.06);
+  background: var(--fp-ink);
+  width: 100%;
+  height: 100%;
+}
+
+.fp-lane .react-flow__node {
+  transition: none;
+}
+
+.fp-lane .react-flow__handle {
+  width: 16px;
+  height: 16px;
+  background: var(--fp-teal);
+  border: 2px solid #f3ead7;
+}
+
+.fp-lane .react-flow__controls {
+  border: 1px solid var(--fp-line);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.fp-lane .react-flow__controls-button {
+  width: 28px;
+  height: 28px;
+  background: #171c1a;
+  border-bottom: 1px solid var(--fp-line);
+  fill: var(--fp-paper);
+}
+
+.fp-slot-controls {
+  padding: 0.8rem;
+}
+
+.fp-slot .fp-dial output {
+  font-size: 1.35rem;
+}
+
+.fp-slot .fp-sentence {
+  font-size: 1rem;
+}
+
+.fp-slot-search {
+  margin-top: 0.6rem;
+}
+
+.fp-slot-search summary {
+  cursor: pointer;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d9d0c2;
+}
+
+.fp-slot-search .fp-results {
+  margin: 0.6rem 0 0;
+  padding: 0;
+}
+
+.fp-lane input,
+.fp-lane textarea,
+.fp-lane button {
+  font-family: inherit;
+}
+
+@media (max-width: 720px) {
+  .fp-lane-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fp-lane-grid {
+    grid-template-columns: 1fr;
+  }
+}

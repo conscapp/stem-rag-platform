@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 const MENU_LINKS = [
   { href: "/create", label: "Innovate" },
   { href: "/play", label: "Fieldplay" },
+  { href: "/experiments", label: "Experiments" },
   { href: "/feed", label: "Portfolio" },
   { href: "/about", label: "Company" },
   { href: "/founder", label: "Founder" },
