@@ -221,15 +221,15 @@ function FieldplayInner() {
     (count: number) => {
       const pane = document.querySelector(".fp-canvas");
       const rect = pane?.getBoundingClientRect();
-      const center = rf.screenToFlowPosition({
-        x: (rect?.left ?? 0) + (rect?.width ?? 800) / 2,
-        y: (rect?.top ?? 0) + (rect?.height ?? 600) / 2,
+      const origin = rf.screenToFlowPosition({
+        x: (rect?.left ?? 0) + 36,
+        y: (rect?.top ?? 0) + 28,
       });
-      const angle = count * 0.9;
-      const radius = 20 + (count % 6) * 18;
+      const col = count % 2;
+      const row = Math.floor(count / 2);
       return {
-        x: center.x + Math.cos(angle) * radius - 124,
-        y: center.y + Math.sin(angle) * radius - 80,
+        x: origin.x + col * 300,
+        y: origin.y + row * 360,
       };
     },
     [rf],
@@ -280,8 +280,11 @@ function FieldplayInner() {
         data: { kind: "supports", weight: 1, dropped: false, label: "" },
       }));
       dispatch({ type: "add-cards", nodes: [node], edges });
+      window.setTimeout(() => {
+        rf.fitView({ padding: 0.2, duration: reduceMotion.current ? 0 : 160, maxZoom: 1 });
+      }, 40);
     },
-    [nextPosition, state.edges, state.nodes],
+    [nextPosition, rf, state.edges, state.nodes],
   );
 
   const addCustom = useCallback(
@@ -299,8 +302,12 @@ function FieldplayInner() {
         ],
         edges: [],
       });
+      setNotice(`Added ${kind}`);
+      window.setTimeout(() => {
+        rf.fitView({ padding: 0.2, duration: reduceMotion.current ? 0 : 160, maxZoom: 1 });
+      }, 40);
     },
-    [nextPosition, state.nodes.length],
+    [nextPosition, rf, state.nodes.length],
   );
 
   const onConnect = useCallback((connection: Connection) => {
@@ -386,6 +393,7 @@ function FieldplayInner() {
             edgeTypes={edgeTypes}
             connectionMode={ConnectionMode.Loose}
             connectionLineStyle={{ stroke: "#1f8a70", strokeWidth: 2 }}
+            connectionRadius={48}
             deleteKeyCode={null}
             selectionKeyCode="Shift"
             multiSelectionKeyCode={["Meta", "Control"]}

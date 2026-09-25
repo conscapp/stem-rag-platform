@@ -93,27 +93,45 @@ export default function Hud(props: HudProps) {
                 <label htmlFor={`fp-dial-${dial.key}`}>{dial.label}</label>
                 <output htmlFor={`fp-dial-${dial.key}`}>{value}</output>
               </div>
-              <input
-                id={`fp-dial-${dial.key}`}
-                type="range"
-                min={0}
-                max={100}
-                step={1}
-                value={value}
-                disabled={!editable}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={value}
-                aria-valuetext={editable ? String(value) : `${value}, simulated from the board`}
-                onPointerDown={() => {
-                  dialGesture.current = false;
-                }}
-                onChange={(event) => {
-                  if (!editable) return;
-                  props.onDial(dial.key, Number(event.target.value), !dialGesture.current);
-                  dialGesture.current = true;
-                }}
-              />
+              <div className="fp-dial-controls">
+                <button
+                  type="button"
+                  aria-label={`Decrease ${dial.label}`}
+                  disabled={!editable}
+                  onClick={() => props.onDial(dial.key, value - 5, true)}
+                >
+                  −
+                </button>
+                <input
+                  id={`fp-dial-${dial.key}`}
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={value}
+                  disabled={!editable}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={value}
+                  aria-valuetext={editable ? String(value) : `${value}, simulated from the board`}
+                  onPointerDown={() => {
+                    dialGesture.current = false;
+                  }}
+                  onChange={(event) => {
+                    if (!editable) return;
+                    props.onDial(dial.key, Number(event.target.value), !dialGesture.current);
+                    dialGesture.current = true;
+                  }}
+                />
+                <button
+                  type="button"
+                  aria-label={`Increase ${dial.label}`}
+                  disabled={!editable}
+                  onClick={() => props.onDial(dial.key, value + 5, true)}
+                >
+                  +
+                </button>
+              </div>
               {props.mode === "direct" ? (
                 <span className="fp-dial-mark">Board would say {Math.round(props.simulated[dial.key])}</span>
               ) : null}

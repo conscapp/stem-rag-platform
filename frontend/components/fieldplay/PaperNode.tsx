@@ -53,6 +53,7 @@ function PaperNodeView({ id, data, selected }: NodeProps<PaperNodeType>) {
       className={[
         "fp-card",
         selected ? "is-selected" : "",
+        custom ? "is-custom" : "",
         data.muted ? "is-muted" : "",
         !scoring && !data.muted ? "is-benched" : "",
         mode === "direct" && scoring ? `is-${stance}` : "",

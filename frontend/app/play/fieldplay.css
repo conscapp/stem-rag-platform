@@ -235,10 +235,14 @@ body:has(.fieldplay-root) {
 }
 
 .fp-custom {
+  position: sticky;
+  bottom: 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.4rem;
   margin-top: 0.9rem;
+  padding-top: 0.6rem;
+  background: #121614;
 }
 
 .fp-custom button:first-child {
@@ -289,10 +293,10 @@ body:has(.fieldplay-root) {
 }
 
 .fieldplay-root .react-flow__handle {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   background: var(--fp-teal);
-  border: 2px solid #143f36;
+  border: 2px solid #f3ead7;
 }
 
 .fieldplay-root .react-flow__controls {
@@ -383,6 +387,10 @@ body:has(.fieldplay-root) {
 
 .fp-card.is-neutral {
   border-left-color: var(--fp-slate);
+}
+
+.fp-card.is-custom {
+  background: #efe4cc;
 }
 
 .fp-kicker {
@@ -574,47 +582,39 @@ body:has(.fieldplay-root) {
   color: var(--fp-paper);
 }
 
-.fp-dial input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 28px;
+.fp-dial-controls {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.fp-dial-controls button {
+  border: 1px solid rgba(243, 234, 215, 0.28);
   background: transparent;
-  margin: 0.15rem 0 0;
+  color: var(--fp-paper);
+  height: 28px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
-.fp-dial input[type="range"]::-webkit-slider-runnable-track {
-  height: 8px;
-  background: #1c2421;
-  border: 1px solid rgba(243, 234, 215, 0.22);
+.fp-dial-controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
-.fp-dial input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  margin-top: -6px;
-  background: var(--fp-paper);
-  border: 2px solid var(--fp-teal);
-  border-radius: 50%;
+.fp-dial input[type="range"] {
+  width: 100%;
+  height: 1.6rem;
+  margin: 0;
+  accent-color: var(--fp-teal);
+  cursor: pointer;
 }
 
-.fp-dial input[type="range"]::-moz-range-track {
-  height: 8px;
-  background: #1c2421;
-  border: 1px solid rgba(243, 234, 215, 0.22);
-}
-
-.fp-dial input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: var(--fp-paper);
-  border: 2px solid var(--fp-teal);
-  border-radius: 50%;
-}
-
-.fp-dial input:disabled::-webkit-slider-thumb {
-  background: var(--fp-paper);
+.fp-dial input[type="range"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .fp-dial-mark {
